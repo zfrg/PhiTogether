@@ -8,7 +8,6 @@
             content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover"
         />
         <title>PhiTogether</title>
-        <meta name="screen-orientation" content="landscape">
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="mobile-web-app-capable" content="yes" />
         <link rel="manifest" href="/manifest.json" />
@@ -62,25 +61,6 @@
             type="module"
         ></script>
         <script defer src="/src/components/background/index.js" type="module"></script>
-        <script>
-            window.addEventListener(
-              "orientationchange",
-              function () {
-                if (window.orientation === 0 || window.orientation === 180) {
-                  console.log("竖屏模式");
-                } else {
-                  console.log("横屏模式");
-                }
-              },
-              false,
-            );
-            
-            if (screen.orientation) {
-              screen.orientation.lock("landscape").catch((err) => {
-                console.error("无法锁定横屏:", err);
-              });
-            }
-        </script>
         <link rel="apple-touch-icon" href="/src/core/lg512y512.png" />
         <script>
             if (window.gtagLoaded) {
