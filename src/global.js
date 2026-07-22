@@ -42,42 +42,19 @@ if (spec.isPhiTogetherApp) {
 
 const mainCtn = document.querySelector("div.main");
 const requestFullscreen = async forced => {
-    if (
-        !forced &&
-        (spec.isPhiTogetherApp ||
-            spec.isDesktop ||
-            location.hostname === "localhost" ||
-            (searchParams &&
-                searchParams.get("flag") &&
-                searchParams.get("flag").includes("noRequestingFullscreen")))
-    ) {
-        shared.game.requestedFullscreen = true;
-        return;
-    }
-    if (spec.isiOSDevice && !spec.isPhiTogetherApp) {
-        if (await msgHandler.confirm(i18n.global.t("requestFullscreen.requestDownloadiOSApp")))
-            window.location.href = "https://testflight.apple.com/join/PvFpBSft";
-        shared.game.requestedFullscreen = true;
-        return;
-    }
+    if (!forced) return;
     if (!full.enabled) {
         msgHandler.sendMessage(i18n.global.t("requestFullscreen.unsupported"), "error");
-        shared.game.requestedFullscreen = true;
         return;
     }
     if (!full.check(mainCtn)) {
-        if (
-            await msgHandler.confirm(
-                i18n.global.t("requestFullscreen.requestFullscreen"),
-                i18n.global.t("info.info"),
-                i18n.global.t("requestFullscreen.clickToFullscreen"),
-                i18n.global.t("info.cancel")
-            )
-        )
-            full.toggle(mainCtn);
-        shared.game.requestedFullscreen = true;
+        try {
+            await full.toggle(mainCtn);
+            shared.game.requestedFullscreen = true;
+        } catch (e) {
+            msgHandler.sendMessage(i18n.global.t("requestFullscreen.unsupported"), "error");
+        }
     }
-    return;
 };
 shared.game.requestedFullscreen = false;
 shared.game.requestFullscreen = requestFullscreen;
@@ -903,11 +880,9 @@ const ptAppInstance = createApp({
             }
 
             document.addEventListener("fullscreenchange", () => {
-                if (full.check(mainCtn)) {
-                    if (this.$route.path === "/playing") {
-                        if (!shared.game.app.isFull) shared.game.doFullScreen();
-                    }
-                } else requestFullscreen();
+                if (full.check(mainCtn) && this.$route.path === "/playing") {
+                    if (!shared.game.app.isFull) shared.game.doFullScreen();
+                }
             });
 
             document.addEventListener("visibilitychange", () => {
@@ -916,20 +891,10 @@ const ptAppInstance = createApp({
                         for (const i of shared.game.afterShow) i();
                         shared.game.afterShow = [];
                     }
-                    requestFullscreen();
                 }
             });
 
-            const requestLandscape = async () => {
-                if (!full.check(mainCtn) && window.innerHeight > window.innerWidth)
-                    requestFullscreen();
-            };
-
             this.prprRespacks = await ptdb.skin.getAll();
-
-            window.addEventListener("resize", Utils.throttle(requestLandscape, 200));
-
-            setTimeout(requestLandscape, 500);
 
             const account = this.gameConfig.account;
             if (account.tokenInfo && account.userBasicInfo) {

@@ -61,7 +61,6 @@ export const simphiPlayer = {
             // qwqPause: simphiPlayer.pause,
             frameAnimater: simphiPlayer.frameAnimater,
         };
-        await shared.game.requestFullscreen();
         simphiPlayer.app.canvas.classList.add("fade");
         let loadedNum = 0;
         let errorNum = 0;

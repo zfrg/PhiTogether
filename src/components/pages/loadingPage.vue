@@ -52,18 +52,6 @@
                 }
             };
 
-            const untilFullscreen = () => {
-                return new Promise(res => {
-                    const checkOnce = () => {
-                        if (shared.game.requestedFullscreen) res();
-                        else setTimeout(checkOnce, 100);
-                    };
-                    setTimeout(checkOnce, 100);
-                });
-            };
-
-            await untilFullscreen();
-
             this.showNextImage();
         },
     };
