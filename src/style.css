@@ -47,6 +47,11 @@ footer {
     display: inline-block;
 }
 
+#settings {
+    max-height: calc(100vh - 100px);
+    overflow-y: auto;
+}
+
 #stage {
     position: relative;
     background-color: 0;

@@ -200,7 +200,7 @@ router.beforeEach((to, from) => {
     if (gameAdjustPage.includes(from.path) && !gameAdjustPage.includes(to.path)) {
         $("gameAdjust").style.display = "none";
     }
-    if (["/chartSelect", "/startPage", "/replayPage", "/loading"].includes(to.path)) {
+    if (["/chartSelect", "/startPage", "/replayPage", "/loading", "/settings", "/playing"].includes(to.path)) {
         document.body.style.overflow = "hidden";
         document.querySelector("div.main").overflow = "hidden";
     } else {
