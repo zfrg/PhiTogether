@@ -18,5 +18,7 @@
         "HitSong0": "/src/respack/together-pack-1/HitSong0.ogg",
         "HitSong1": "/src/respack/together-pack-1/HitSong1.ogg",
         "HitSong2": "/src/respack/together-pack-1/HitSong2.ogg"
-    }
+    },
+    "hitEvtType": 1,
+    "hitEvtDrawer": "ctxos.fillRect(ds*Math.cos(j[1])-r3/2,ds*Math.sin(j[1])-r3/2,r3,r3);"
 }
