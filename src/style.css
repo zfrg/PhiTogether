@@ -47,8 +47,8 @@ footer {
     display: inline-block;
 }
 
-#settings {
-    overflow-y: auto;
+#app {
+    overflow: auto;
 }
 
 #stage {
