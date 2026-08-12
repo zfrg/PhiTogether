@@ -63,7 +63,11 @@ export async function loadRes(url: string, manual: boolean = false, setAsDefault
             r
                 .json()
                 .then(crm => {
-                    if (crm["hitEvtDrawer"] && !urlBak.startsWith(atob("cGdyZXM0cHQucmVhbHR2b3Au")))
+                    if (
+                        crm["hitEvtDrawer"] &&
+                        !urlBak.startsWith(atob("cGdyZXM0cHQucmVhbHR2b3Au")) &&
+                        !urlBak.startsWith("/src/respack/")
+                    )
                         crm["hitEvtDrawer"] = null;
                     simphiPlayer.customResourceMeta = crm;
                     if (setAsDefault) defaultCRM = crm;
