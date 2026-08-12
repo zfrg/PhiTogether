@@ -487,7 +487,7 @@
                 if (!chart.userScore) {
                     if (!shared.game.ptmain.gameConfig.ptBestRecords)
                         shared.game.ptmain.gameConfig.ptBestRecords = {};
-                    const scoreData = (chart.isFromPhiZone
+                    const scoreData = (chart.isFromPhiZone && !shared.game.ptmain.noAccountMode
                         ? shared.game.ptmain.gameConfig.account.pzBestRecords || {}
                         : shared.game.ptmain.gameConfig.ptBestRecords)[chart.id] || [
                         0,

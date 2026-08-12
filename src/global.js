@@ -603,7 +603,8 @@ const ptAppInstance = createApp({
             }
         },
         async retry() {
-            await this.genPlayToken();
+            if (this.gameMode !== "multi" && !this.shouldNotUploadPhiZone)
+                await this.genPlayToken();
             recordMgr.reset();
             shared.game.restartClearRecord();
         },
@@ -723,7 +724,10 @@ const ptAppInstance = createApp({
             };
             const savePTCRLocally = () => {
                 return new Promise(async res => {
-                    if (this.shouldNotSaveScore || chartData.isFromPhiZone) {
+                    if (
+                        this.shouldNotSaveScore ||
+                        (chartData.isFromPhiZone && !this.shouldNotUploadPhiZone)
+                    ) {
                         res(true);
                         return;
                     }
